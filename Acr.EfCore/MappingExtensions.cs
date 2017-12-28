@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
@@ -10,27 +9,27 @@ namespace Acr.EfCore
 {
     public static class MappingConventions
     {
-        public static void GetProperties<T>(this EntityTypeBuilder<T> builder)
-        {
-            var allProperties = builder
-                .Metadata
-                .ClrType
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.CanWrite && x.CanRead)
-                .ToList();
+        //public static void GetProperties<T>(this EntityTypeBuilder<T> builder) where T : class
+        //{
+        //    var allProperties = builder
+        //        .Metadata
+        //        .ClrType
+        //        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        //        .Where(x => x.CanWrite && x.CanRead)
+        //        .ToList();
 
-            var navigations = builder
-                .Metadata
-                .GetNavigations()
-                .Select(x => x.Name)
-                .ToList();
+        //    var navigations = builder
+        //        .Metadata
+        //        .GetNavigations()
+        //        .Select(x => x.Name)
+        //        .ToList();
 
-            var list = allProperties
-                .Where(x => !navigations.Contains(x.Name))
-                .ToList();
+        //    var list = allProperties
+        //        .Where(x => !navigations.Contains(x.Name))
+        //        .ToList();
 
-            //return list;
-        }
+        //    //return list;
+        //}
 
 
         public static void Defaults<T>(this EntityTypeBuilder<T> builder) where T : class
