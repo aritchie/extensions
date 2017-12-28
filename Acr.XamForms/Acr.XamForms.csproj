@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Allan Ritchie</Authors>
+    <Company />
+    <Product>ACR Xamarin Forms Extensions</Product>
+    <Description>ACR Xamarin Forms Extensions</Description>
+    <Version>2.0.0</Version>
+    <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
+    <PackageTags>acr xamarin</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
+  </ItemGroup>
+
+</Project>
