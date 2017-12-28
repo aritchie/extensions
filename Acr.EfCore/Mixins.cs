@@ -22,36 +22,5 @@ namespace Acr.EfCore
                 if (x.State == EntityState.Modified)
                     ds.DateUpdated = DateTimeOffset.UtcNow;
             });
-
-
-        public static IDisposable ApplyAuditing() => Observable.Create<Unit>(ob =>
-        {
-            var beforeSub = AcrDbContext
-                .BeforeEach
-                .Where(x => x.Entity is IAudit)
-                .Cast<IAudit>()
-                .Subscribe(audit => audit.Version++);
-
-            var afterSub = AcrDbContext
-                .AfterAll
-                .Subscribe(entities =>
-                {
-                    var auditEntries = entities
-                        .Where(x => x.Entry.Entity is IAudit)
-                        .ToList();
-
-                    foreach (var entry in auditEntries)
-                    {
-
-                    }
-                });
-
-            return () =>
-            {
-                beforeSub.Dispose();
-                afterSub.Dispose();
-            };
-        })
-        .Subscribe();
     }
 }
