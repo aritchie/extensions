@@ -4,12 +4,24 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 
 namespace Acr
 {
     public static class RxExtensions
     {
+        public static IConnectableObservable<TItem> ReplayWithReset<TItem, TReset>(this IObservable<TItem> src, IObservable<TReset> resetTrigger)
+            => new ClearableReplaySubject<TItem, TReset>(src, resetTrigger);
+
+
+        public static void Respond<T>(this IObserver<T> ob, T value)
+        {
+            ob.OnNext(value);
+            ob.OnCompleted();
+        }
+
+
         public static IObservable<List<Timestamped<T>>> BufferWhile<T>(this IObservable<T> thisObs, Func<T, bool> predicate)
             => Observable.Create<List<Timestamped<T>>>(ob =>
             {

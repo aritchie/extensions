@@ -11,6 +11,8 @@
         <PackageTags>ios android utils acr</PackageTags>
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
+        <AssemblyName>Acr.Core</AssemblyName>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Acr
 {
     public static class EnumerableExtensions
     {
+        public static bool IsEmpty<T>(this IEnumerable<T> en)
+            => en == null || !en.Any();
+
+
         public static void Each<T>(this IEnumerable<T> en, Action<T> action)
         {
             if (en == null)
