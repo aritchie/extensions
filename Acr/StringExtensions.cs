@@ -18,7 +18,7 @@ namespace Acr
         }
 
 
-        public static byte[] FromHex(this string hex)
+        public static byte[] FromHexString(this string hex)
         {
             hex = hex
                 .Replace("-", String.Empty)

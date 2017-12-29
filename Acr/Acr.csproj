@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10;uap10.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Allan Ritchie</Authors>
         <Company />
@@ -16,7 +16,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <Product>ACR Core Extensions</Product>
+        <Product>ACR Core Extensions - .NET Standard</Product>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' OR '$(TargetFramework)' == 'MonoAndroid70' ">
@@ -29,6 +29,13 @@
         <Product>ACR Core Extensions - iOS</Product>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
+        <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+        <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+        <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
+        <Product>CR Core Extensions - UWP</Product>
+    </PropertyGroup>
+
     <ItemGroup>
         <Compile Remove="Platforms\**\*.cs" />
         <None Include="Platforms\**\*.cs" />
@@ -37,12 +44,20 @@
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
+        <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\iOS\**\*.cs" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR '$(TargetFramework)' == 'MonoAndroid80' ">
+        <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Android\**\*.cs" />
     </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
+        <Compile Include="Platforms\Shared\**\*.cs" />
+        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.5" />
+    </ItemGroup>
+
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
