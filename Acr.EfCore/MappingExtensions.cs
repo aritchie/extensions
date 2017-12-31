@@ -9,7 +9,7 @@ namespace Acr.EfCore
 {
     public static class MappingConventions
     {
-        //public static void GetProperties<T>(this EntityTypeBuilder<T> builder) where T : class
+        //public static List<PropertyInfo> GetMappedProperties<T>(this EntityTypeBuilder<T> builder) where T : class
         //{
         //    var allProperties = builder
         //        .Metadata
@@ -28,7 +28,7 @@ namespace Acr.EfCore
         //        .Where(x => !navigations.Contains(x.Name))
         //        .ToList();
 
-        //    //return list;
+        //    return list;
         //}
 
 
@@ -37,16 +37,29 @@ namespace Acr.EfCore
             builder.DefaultTableName();
             builder.DefaultId();
 
-            //var properties = this.GetAllProperties();
-            //foreach (var property in properties)
-            //{
-            //    builder
-            //        .Property(property.Name)
-            //        .HasMaxLength(50)
-            //        .IsRequired();
-            //}
+            var properties = builder
+                .Metadata
+                .ClrType
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(x => x.CanWrite && x.CanRead && x.PropertyType == typeof(string))
+                .ToList();
+
+            foreach (var property in properties)
+            {
+                builder
+                    .Property(property.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            }
         }
 
+
+        public static void DefaultString(this PropertyBuilder<string> builder, int length = 50)
+        {
+            builder
+                .IsRequired()
+                .HasMaxLength(length);
+        }
 
         public static void DefaultTableName<T>(this EntityTypeBuilder<T> builder) where T : class
         {
