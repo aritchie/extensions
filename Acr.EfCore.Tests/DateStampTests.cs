@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -10,16 +11,17 @@ namespace Acr.EfCore.Tests
         [Fact]
         public void Test()
         {
-            TestDbContext.ContextCreated.Subscribe(db => db.DateStamps());
-
-            using (var db = new TestDbContext())
+            using (DateStampDbContext.ContextCreated.OfType<DateStampDbContext>().Subscribe(db => db.DateStamps()))
             {
-                var e = db.Items.Add(new TestItem { Description = "1" });
-                db.SaveChanges();
+                using (var db = new DateStampDbContext())
+                {
+                    var e = db.Items.Add(new TestItem {Description = "1"});
+                    db.SaveChanges();
 
-                var now = DateTimeOffset.UtcNow.ToString("f");
-                e.Entity.DateCreated.ToString("f").Should().Be(now);
-                e.Entity.DateUpdated.ToString("f").Should().Be(now);
+                    var now = DateTimeOffset.UtcNow.ToString("f");
+                    e.Entity.DateCreated.ToString("f").Should().Be(now);
+                    e.Entity.DateUpdated.ToString("f").Should().Be(now);
+                }
             }
         }
     }

@@ -13,10 +13,19 @@ namespace Acr.EfCore
             data.WhenModelBuilding.Subscribe(x => x.SoftDeletes());
             data.BeforeEach.Subscribe(x =>
             {
-                if (x.State == EntityState.Deleted && x.Entity is ISoftDeleteEntity softDelete)
+                if (x.Entity is ISoftDeleteEntity softDelete)
                 {
-                    softDelete.IsDeleted = true;
-                    x.State = EntityState.Modified;
+                    switch (x.State)
+                    {
+                        case EntityState.Added:
+                            softDelete.IsDeleted = false;
+                            break;
+
+                        case EntityState.Deleted:
+                            softDelete.IsDeleted = true;
+                            x.State = EntityState.Modified;
+                            break;
+                    }
                 }
             });
         }
