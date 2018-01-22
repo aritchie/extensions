@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -22,6 +25,8 @@ namespace Acr.EfCore
         //    EFServiceProvider.ApplicationServices = app.ApplicationServices;
         //    return app;
         //}
+
+        public static IObservable<List<T>> ToObservable<T>(this IQueryable<T> query) => Observable.FromAsync(query.ToListAsync);
 
 
         public static void Cancel(this EntityEntry entry)

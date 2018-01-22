@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -6,9 +8,10 @@ namespace Acr.EfCore
 {
     public static class ISoftDeleteExtensions
     {
-        public static void SoftDeletes(this AcrDbContext data) => data
-            .BeforeEach
-            .Subscribe(x =>
+        public static void SoftDeletes(this AcrDbContext data)
+        {
+            data.WhenModelBuilding.Subscribe(x => x.SoftDeletes());
+            data.BeforeEach.Subscribe(x =>
             {
                 if (x.State == EntityState.Deleted && x.Entity is ISoftDeleteEntity softDelete)
                 {
@@ -16,5 +19,37 @@ namespace Acr.EfCore
                     x.State = EntityState.Modified;
                 }
             });
+        }
+
+
+        public static void SoftDeletes(this ModelBuilder builder)
+        {
+            var entityTypes = builder.Model.GetEntityTypes();
+            foreach (var entityType in entityTypes)
+            {
+                var tenant = typeof(ISoftDeleteEntity).IsAssignableFrom(entityType.ClrType);
+                if (tenant)
+                {
+                    var method = SetFilterMethod.MakeGenericMethod(entityType.ClrType);
+                    method.Invoke(null, new object[] { builder });
+                }
+            }
+        }
+
+
+        static readonly MethodInfo SetFilterMethod = typeof(ISoftDeleteExtensions)
+            .GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+            .FirstOrDefault(x =>
+                x.IsGenericMethod &&
+                x.Name == nameof(SetFilter)
+            );
+
+
+        static void SetFilter<T>(ModelBuilder builder) where T : class, ISoftDeleteEntity
+        {
+            builder
+                .Entity<T>()
+                .HasQueryFilter(x => !x.IsDeleted);
+        }
     }
 }

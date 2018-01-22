@@ -12,8 +12,13 @@ namespace Acr.EfCore
 {
     public class AcrDbContext : DbContext
     {
-        public static Action<AcrDbContext> InstanceCreated { get; }
         public bool IsTriggersEnabled { get; set; } = true;
+
+        static readonly Subject<AcrDbContext> contextCreatedSubject = new Subject<AcrDbContext>();
+        public static IObservable<AcrDbContext> ContextCreated => contextCreatedSubject;
+
+        readonly Subject<DbContextOptionsBuilder> configSubject = new Subject<DbContextOptionsBuilder>();
+        public IObservable<DbContextOptionsBuilder> WhenConfiguring => this.configSubject;
 
         readonly Subject<ModelBuilder> modelBuilderSubject = new Subject<ModelBuilder>();
         public IObservable<ModelBuilder> WhenModelBuilding => this.modelBuilderSubject;
@@ -34,10 +39,18 @@ namespace Acr.EfCore
         protected bool HasAfterTriggerEnabled => this.afterEachSubject.HasObservers || this.afterAllSubject.HasObservers;
 
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            contextCreatedSubject.OnNext(this);
+            this.configSubject.OnNext(optionsBuilder);
+        }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             this.modelBuilderSubject.OnNext(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
 

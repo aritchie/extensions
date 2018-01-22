@@ -4,10 +4,10 @@
  - [] Android
  - [] .NET Standard
 
-## Version of OS(s) listed above with issue
-
-
-## Version of Library
+## Which Library
+ - [] Core
+ - [] EF Core Extension
+ - [] Xamarin Forms Extensions
 
 
 ## Expected Behaviour

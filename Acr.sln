@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acr.EfCore", "Acr.EfCore\Acr.EfCore.csproj", "{75F8953F-2839-47CF-BD7E-563317D34889}"
 EndProject
@@ -11,11 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acr.Tests", "Acr.Tests\Acr.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acr.EfCore.Tests", "Acr.EfCore.Tests\Acr.EfCore.Tests.csproj", "{E0978780-B0DC-47DA-9736-2781F15A65E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acr.XamForms", "Acr.XamForms\Acr.XamForms.csproj", "{5CD2ED0A-B502-4589-A585-6F30B32427CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acr.XamForms", "Acr.XamForms\Acr.XamForms.csproj", "{5CD2ED0A-B502-4589-A585-6F30B32427CC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{863F65F9-A1CC-4DD9-9380-1560DF281036}"
 	ProjectSection(SolutionItems) = preProject
-		changelog.md = changelog.md
+		docs\core.md = docs\core.md
+		docs\core_changelog.md = docs\core_changelog.md
+		docs\efcore.md = docs\efcore.md
+		docs\efcore_changelog.md = docs\efcore_changelog.md
+		docs\forms.md = docs\forms.md
+		docs\forms_changelog.md = docs\forms_changelog.md
 		ISSUE_TEMPLATE = ISSUE_TEMPLATE
 		LICENSE.md = LICENSE.md
 		push.cmd = push.cmd

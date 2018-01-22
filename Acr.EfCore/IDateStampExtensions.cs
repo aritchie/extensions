@@ -12,13 +12,21 @@ namespace Acr.EfCore
             .Where(x => x.Entity is IDateStampEntity)
             .Subscribe(x =>
             {
-                var ds = x.Entity as IDateStampEntity;
+                if (x.Entity is IDateStampEntity ds)
+                {
+                    var now = DateTimeOffset.UtcNow;
+                    switch (x.State)
+                    {
+                        case EntityState.Added:
+                            ds.DateCreated = now;
+                            ds.DateUpdated = now;
+                            break;
 
-                if (x.State == EntityState.Added && ds.DateCreated == DateTimeOffset.MinValue)
-                    ds.DateCreated = DateTimeOffset.UtcNow;
-
-                if (x.State == EntityState.Modified)
-                    ds.DateUpdated = DateTimeOffset.UtcNow;
+                        case EntityState.Modified:
+                            ds.DateUpdated = now;
+                            break;
+                    }
+                }
             });
     }
 }
