@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace Acr.EfCore
 {
-    public static class Mixins
+    public static class IDateStampExtensions
     {
-        public static IDisposable ApplyDateStamping(this AcrDbContext data) => AcrDbContext
+        public static void DateStamps(this AcrDbContext data) => data
             .BeforeEach
             .Where(x => x.Entity is IDateStampEntity)
             .Subscribe(x =>

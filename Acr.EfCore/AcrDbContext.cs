@@ -12,22 +12,33 @@ namespace Acr.EfCore
 {
     public class AcrDbContext : DbContext
     {
+        public static Action<AcrDbContext> InstanceCreated { get; }
         public bool IsTriggersEnabled { get; set; } = true;
 
-        static readonly Subject<EntityEntry> beforeEachSubject = new Subject<EntityEntry>();
-        public static IObservable<EntityEntry> BeforeEach => beforeEachSubject;
+        readonly Subject<ModelBuilder> modelBuilderSubject = new Subject<ModelBuilder>();
+        public IObservable<ModelBuilder> WhenModelBuilding => this.modelBuilderSubject;
 
-        static readonly Subject<IEnumerable<EntityEntry>> beforeAllSubject = new Subject<IEnumerable<EntityEntry>>();
-        public static IObservable<IEnumerable<EntityEntry>> BeforeAll => beforeAllSubject;
+        readonly Subject<EntityEntry> beforeEachSubject = new Subject<EntityEntry>();
+        public IObservable<EntityEntry> BeforeEach => this.beforeEachSubject;
 
-        static readonly Subject<PreEntityEntry> afterEachSubject = new Subject<PreEntityEntry>();
-        public static IObservable<PreEntityEntry> AfterEach => afterEachSubject;
+        readonly Subject<IEnumerable<EntityEntry>> beforeAllSubject = new Subject<IEnumerable<EntityEntry>>();
+        public IObservable<IEnumerable<EntityEntry>> BeforeAll => this.beforeAllSubject;
 
-        static readonly Subject<IEnumerable<PreEntityEntry>> afterAllSubject = new Subject<IEnumerable<PreEntityEntry>>();
-        public static IObservable<IEnumerable<PreEntityEntry>> AfterAll => afterAllSubject;
+        readonly Subject<PreEntityEntry> afterEachSubject = new Subject<PreEntityEntry>();
+        public IObservable<PreEntityEntry> AfterEach => this.afterEachSubject;
+
+        readonly Subject<IEnumerable<PreEntityEntry>> afterAllSubject = new Subject<IEnumerable<PreEntityEntry>>();
+        public IObservable<IEnumerable<PreEntityEntry>> AfterAll => this.afterAllSubject;
 
 
-        protected bool HasAfterTriggerEnabled => afterEachSubject.HasObservers || afterAllSubject.HasObservers;
+        protected bool HasAfterTriggerEnabled => this.afterEachSubject.HasObservers || this.afterAllSubject.HasObservers;
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            this.modelBuilderSubject.OnNext(modelBuilder);
+        }
 
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -70,12 +81,12 @@ namespace Acr.EfCore
             if (!this.IsTriggersEnabled)
                 return;
 
-            if (beforeEachSubject.HasObservers)
+            if (this.beforeEachSubject.HasObservers)
                 foreach (var entry in entries)
-                    beforeEachSubject.OnNext(entry);
+                    this.beforeEachSubject.OnNext(entry);
 
-            if (beforeAllSubject.HasObservers)
-                beforeAllSubject.OnNext(entries);
+            if (this.beforeAllSubject.HasObservers)
+                this.beforeAllSubject.OnNext(entries);
         }
 
 
@@ -84,12 +95,12 @@ namespace Acr.EfCore
             if (!this.IsTriggersEnabled)
                 return;
 
-            if (afterEachSubject.HasObservers)
+            if (this.afterEachSubject.HasObservers)
                 foreach (var entry in entries)
-                    afterEachSubject.OnNext(entry);
+                    this.afterEachSubject.OnNext(entry);
 
-            if (afterAllSubject.HasObservers)
-                afterAllSubject.OnNext(entries);
+            if (this.afterAllSubject.HasObservers)
+                this.afterAllSubject.OnNext(entries);
         }
     }
 }

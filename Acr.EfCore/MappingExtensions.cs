@@ -32,7 +32,7 @@ namespace Acr.EfCore
         //}
 
 
-        public static void Defaults<T>(this EntityTypeBuilder<T> builder) where T : class
+        public static void Defaults<T>(this EntityTypeBuilder<T> builder, int defaultStringLength = 50) where T : class
         {
             builder.DefaultTableName();
             builder.DefaultId();
@@ -49,7 +49,7 @@ namespace Acr.EfCore
                 builder
                     .Property(property.Name)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(defaultStringLength);
             }
         }
 
@@ -60,6 +60,7 @@ namespace Acr.EfCore
                 .IsRequired()
                 .HasMaxLength(length);
         }
+
 
         public static void DefaultTableName<T>(this EntityTypeBuilder<T> builder) where T : class
         {
