@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reactive.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 namespace Acr.EfCore
@@ -26,6 +28,7 @@ namespace Acr.EfCore
         //    return app;
         //}
 
+        public static bool DoesDatabaseExist(this DbContext context) => ((RelationalDatabaseCreator)context.GetService<IDatabaseCreator>()).Exists();
         public static IObservable<List<T>> ToObservable<T>(this IQueryable<T> query) => Observable.FromAsync(query.ToListAsync);
 
 

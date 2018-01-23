@@ -4,6 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Acr.EfCore.Tests
 {
+    public class SqliteDbContext : AcrDbContext
+    {
+        readonly string dbName;
+
+
+        public SqliteDbContext(string dbName) => this.dbName = dbName;
+        public DbSet<TestItem> Items { get; set; }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            builder.UseSqlite($"Data Source={this.dbName}");
+            base.OnConfiguring(builder);
+        }
+    }
+
+
     public class SoftDeleteDbContext : BaseDbContext
     {
         public SoftDeleteDbContext() : base("deletes") { }
