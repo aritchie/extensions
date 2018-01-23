@@ -12,6 +12,10 @@ namespace Acr.EfCore
 {
     public class AcrDbContext : DbContext
     {
+        protected AcrDbContext() : base() { }
+        protected AcrDbContext(DbContextOptions options) : base(options) { }
+
+
         public bool IsTriggersEnabled { get; set; } = true;
 
         static readonly Subject<AcrDbContext> contextCreatedSubject = new Subject<AcrDbContext>();

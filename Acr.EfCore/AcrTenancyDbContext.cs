@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -8,6 +10,38 @@ namespace Acr.EfCore
 {
     public class AcrTenancyDbContext : AcrDbContext
     {
+        protected AcrTenancyDbContext() : base() { }
+        protected AcrTenancyDbContext(DbContextOptions options) : base(options) { }
+
+
+        public override int SaveChanges()
+        {
+            this.SetTenantId();
+            return base.SaveChanges();
+        }
+
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            this.SetTenantId();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            this.SetTenantId();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            this.SetTenantId();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+
         static readonly MethodInfo SetTenancyFilterMethod = typeof(AcrTenancyDbContext)
             .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
             .FirstOrDefault(x =>
@@ -36,6 +70,21 @@ namespace Acr.EfCore
         }
 
 
+        protected virtual void SetTenantId()
+        {
+            if (this.TenantId == null)
+                return;
+
+            var entities = this.ChangeTracker
+                .Entries()
+                .Select(x => x.Entity)
+                .OfType<ITenantEntity>();
+
+            foreach (var e in entities)
+                e.TenantId = this.TenantId.Value;
+        }
+
+
         void SetTenancyFilter<T>(ModelBuilder builder) where T : class, ITenantEntity
         {
             builder
@@ -44,19 +93,14 @@ namespace Acr.EfCore
         }
 
 
-        public override int SaveChanges()
-        {
-            if (this.TenantId != null)
-            {
-                var entities = this.ChangeTracker
-                    .Entries()
-                    .Select(x => x.Entity)
-                    .OfType<ITenantEntity>();
 
-                foreach (var e in entities)
-                    e.TenantId = this.TenantId.Value;
-            }
-            return base.SaveChanges();
-        }
+
+
+        //public override Int32 SaveChanges()
+        //{
+        //    return TriggersEnabled ? this.SaveChangesWithTriggers(base.SaveChanges) : base.SaveChanges();
+        //}
+
+
     }
 }
