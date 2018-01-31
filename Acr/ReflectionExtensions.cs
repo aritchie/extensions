@@ -14,5 +14,14 @@ namespace Acr
             var property = sender.GetType().GetRuntimeProperty(member.Member.Name);
             return property;
         }
+
+
+        public static Type UnwrapType(Type type)
+        {
+            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                type = Nullable.GetUnderlyingType(type);
+
+            return type;
+        }
     }
 }

@@ -13,6 +13,20 @@ namespace Acr.EfCore
 {
     public static class DataExtensions
     {
+        public static Dictionary<Type, Func<object, object>> Converters { get; } = new Dictionary<Type, Func<object, object>>
+        {
+            { typeof(short), x => Convert.ToInt16(x) },
+            { typeof(ushort), x => Convert.ToUInt16(x) },
+            { typeof(int), x => Convert.ToInt32(x) },
+            { typeof(uint), x => Convert.ToUInt32(x) },
+            { typeof(long), x => Convert.ToInt64(x) },
+            { typeof(ulong), x => Convert.ToUInt64(x) },
+            { typeof(double), x => Convert.ToDouble(x) },
+            { typeof(decimal), x => Convert.ToDecimal(x) },
+            { typeof(DateTime), x => DateTimeOffset.Parse(x as string) },
+            { typeof(DateTimeOffset), x => DateTime.Parse(x as string) }
+        };
+
         public static Task<DbDataReader> ExecuteReader(this DbContext data, string sql, params ValueTuple<string, object>[] parameters) => data.ExecuteReader(sql, CancellationToken.None, parameters);
         public static async Task<DbDataReader> ExecuteReader(this DbContext data, string sql, CancellationToken ct, params ValueTuple<string, object>[] parameters)
         {
@@ -50,6 +64,14 @@ namespace Acr.EfCore
         }
 
 
+        public static Type UnwrapType(Type type)
+        {
+            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                type = Nullable.GetUnderlyingType(type);
+
+            return type;
+        }
+
         internal static bool IsDataReflectable(this Type propertyType) =>
             propertyType.IsPrimitive ||
             propertyType == typeof(string) ||
@@ -85,21 +107,13 @@ namespace Acr.EfCore
 
                         if (ordinal != null && !reader.IsDBNull(ordinal.Value))
                         {
+                            var type = UnwrapType(prop.PropertyType);
+
                             var value = reader.GetValue(ordinal.Value);
-                            if (prop.PropertyType == typeof(DateTime) && value is string s1)
-                            {
-                                var dt = DateTime.Parse(s1);
-                                prop.SetValue(obj, dt);
-                            }
-                            else if (prop.PropertyType == typeof(DateTimeOffset) && value is string s2)
-                            {
-                                var dt = DateTimeOffset.Parse(s2);
-                                prop.SetValue(obj, dt);
-                            }
-                            else
-                            {
-                                prop.SetValue(obj, value);
-                            }
+                            if (Converters.ContainsKey(type))
+                                value = Converters[type].Invoke(value);
+
+                            prop.SetValue(obj, value);
                         }
                     }
                     list.Add(obj);
