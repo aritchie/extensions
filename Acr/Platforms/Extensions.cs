@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD10
+using System;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -65,3 +66,4 @@ namespace Acr.IO
 
     }
 }
+#endif

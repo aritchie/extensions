@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD10
+using System;
 using System.IO;
 
 
@@ -12,3 +13,4 @@ namespace Acr.IO
         DirectoryInfo Temp { get; }
     }
 }
+#endif

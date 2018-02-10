@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !NETSTANDARD10
+using System;
+
 
 namespace Acr.IO
 {
@@ -24,6 +26,7 @@ namespace Acr.IO
         }
     }
 }
+#endif
 /*
 public class DirectoryProgress
 {
@@ -38,7 +41,7 @@ public class DirectoryProgress
 
         public async Task<IFile> CopyToAsync(string path, bool overwrite, Action<FileCopyProgress> onProgress, CancellationToken token)
 {
-  
+
 
             return new File(path);
         }
