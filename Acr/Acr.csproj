@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10;uap10.0</TargetFrameworks>
+        <TargetFrameworks>netstandard1.0;netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Allan Ritchie</Authors>
         <Company />
@@ -12,11 +12,17 @@
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
         <AssemblyName>Acr.Core</AssemblyName>
-        <Version>1.1.0</Version>
+        <Version>1.1.1</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <Product>ACR Core Extensions - .NET Standard</Product>
+        <DefineConstants>$(DefineConstants);NETSTANDARD20</DefineConstants>
+        <Product>ACR Core Extensions - .NET Standard 2</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+        <DefineConstants>$(DefineConstants);NETSTANDARD10</DefineConstants>
+        <Product>ACR Core Extensions - .NET Standard 1.0</Product>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' OR '$(TargetFramework)' == 'MonoAndroid70' ">
@@ -29,18 +35,14 @@
         <Product>ACR Core Extensions - iOS</Product>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-        <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-        <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
-        <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
-        <Product>CR Core Extensions - UWP</Product>
-    </PropertyGroup>
-
     <ItemGroup>
         <Compile Remove="Platforms\**\*.cs" />
         <None Include="Platforms\**\*.cs" />
+        <Compile Include="Platforms\Extensions.cs" />
+        <Compile Include="Platforms\FileProgress.cs" />
+        <Compile Include="Platforms\IFileSystem.cs" />
         <PackageReference Include="System.Reactive" Version="3.1.1" />
-        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.1.0" PrivateAssets="all" />
+        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.1" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
@@ -52,12 +54,6 @@
         <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Android\**\*.cs" />
     </ItemGroup>
-
-    <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-        <Compile Include="Platforms\Shared\**\*.cs" />
-        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.5" />
-    </ItemGroup>
-
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

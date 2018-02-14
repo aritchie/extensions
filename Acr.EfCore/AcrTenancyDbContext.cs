@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -87,9 +88,14 @@ namespace Acr.EfCore
 
         void SetTenancyFilter<T>(ModelBuilder builder) where T : class, ITenantEntity
         {
-            builder
-                .Entity<T>()
-                .HasQueryFilter(x => x.TenantId == this.TenantId);
+
+            var ecfg = builder.Entity<T>();
+            //if (ecfg.Metadata.QueryFilter != null)
+            //{
+            //    Expression.And(ecfg.Metadata.QueryFilter, Expressio<Func<T, bool>>.Create);
+            //}
+
+            ecfg.HasQueryFilter(x => x.TenantId == this.TenantId);
         }
 
 
