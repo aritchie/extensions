@@ -72,11 +72,15 @@ namespace Acr.EfCore
             return type;
         }
 
-        internal static bool IsDataReflectable(this Type propertyType) =>
-            propertyType.IsPrimitive ||
-            propertyType == typeof(string) ||
-            propertyType == typeof(DateTime) ||
-            propertyType == typeof(DateTimeOffset);
+
+        internal static bool IsDataReflectable(this Type propertyType)
+        {
+            var t = UnwrapType(propertyType);
+            return t.IsPrimitive ||
+                   t == typeof(string) ||
+                   t == typeof(DateTime) ||
+                   t == typeof(DateTimeOffset);
+        }
 
 
         public static Task<List<T>> ReflectionExecuteToList<T>(this DbContext data, string sql, params ValueTuple<string, object>[] parameters) where T : new() => data.ReflectionExecuteToList<T>(sql, CancellationToken.None, parameters);
@@ -108,9 +112,10 @@ namespace Acr.EfCore
                         if (ordinal != null && !reader.IsDBNull(ordinal.Value))
                         {
                             var type = UnwrapType(prop.PropertyType);
+                            var fieldType = reader.GetFieldType(ordinal.Value);
 
                             var value = reader.GetValue(ordinal.Value);
-                            if (Converters.ContainsKey(type))
+                            if (fieldType != type && Converters.ContainsKey(type))
                                 value = Converters[type].Invoke(value);
 
                             prop.SetValue(obj, value);
