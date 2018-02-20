@@ -22,12 +22,16 @@ namespace Acr.EfCore.Tests
                 db.SqliteEntities.Add(new SqliteEntity
                 {
                     NullId = 1,
-                    SetId = 1
+                    SetId = 1,
+                    Date = DateTime.Now,
+                    Offset = DateTimeOffset.UtcNow
                 });
 
                 db.SqliteEntities.Add(new SqliteEntity
                 {
-                    SetId = 2
+                    SetId = 2,
+                    Date = DateTime.Now,
+                    Offset = DateTimeOffset.UtcNow
                 });
                 db.SaveChanges();
             });
@@ -44,6 +48,9 @@ namespace Acr.EfCore.Tests
                 e = objs.Last();
                 e.NullId.Should().BeNull();
                 e.SetId.Should().Be(2);
+
+                e.Date.Date.Should().Be(DateTime.Now.Date);
+                e.Offset.Date.Should().Be(DateTimeOffset.UtcNow.Date);
             }
         }
 

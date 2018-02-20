@@ -23,8 +23,8 @@ namespace Acr.EfCore
             { typeof(ulong), x => Convert.ToUInt64(x) },
             { typeof(double), x => Convert.ToDouble(x) },
             { typeof(decimal), x => Convert.ToDecimal(x) },
-            { typeof(DateTime), x => DateTimeOffset.Parse(x as string) },
-            { typeof(DateTimeOffset), x => DateTime.Parse(x as string) }
+            { typeof(DateTime), x => DateTime.Parse(x as string) },
+            { typeof(DateTimeOffset), x => DateTimeOffset.Parse(x as string) }
         };
 
         public static Task<DbDataReader> ExecuteReader(this DbContext data, string sql, params ValueTuple<string, object>[] parameters) => data.ExecuteReader(sql, CancellationToken.None, parameters);

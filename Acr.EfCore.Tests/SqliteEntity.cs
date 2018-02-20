@@ -8,6 +8,8 @@ namespace Acr.EfCore.Tests
         public int Id { get; set; }
         public long SetId { get; set; }
         public long? NullId { get; set; }
+        public DateTime Date { get; set; }
+        public DateTimeOffset Offset { get; set; }
     }
 
 
@@ -15,5 +17,7 @@ namespace Acr.EfCore.Tests
     {
         public int SetId { get; set; }
         public int? NullId { get; set; }
+        public DateTime Date { get; set; }
+        public DateTimeOffset Offset { get; set; }
     }
 }
