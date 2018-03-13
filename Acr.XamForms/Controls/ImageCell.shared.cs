@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Acr.XamForms
+namespace Acr.XamForms.Controls
 {
 
     public class ImageCell : Xamarin.Forms.ImageCell

@@ -28,5 +28,6 @@ namespace Acr.XamForms
         void OnDeactivated();
         void OnOrientationChanged(bool isPortrait);
         bool OnBackRequested();
+        void OnDestroy();
     }
 }
