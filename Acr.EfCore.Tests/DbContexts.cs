@@ -11,6 +11,7 @@ namespace Acr.EfCore.Tests
 
         public SqliteDbContext(string dbName) => this.dbName = dbName;
         public DbSet<TestItem> Items { get; set; }
+        public DbSet<SqliteEntity> SqliteEntities { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)

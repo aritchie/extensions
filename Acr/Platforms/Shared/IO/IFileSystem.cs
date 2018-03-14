@@ -10,7 +10,8 @@ namespace Acr.IO
         DirectoryInfo AppData { get; }
         DirectoryInfo Cache { get; }
         DirectoryInfo Public { get; }
-        DirectoryInfo Temp { get; }
+
+        string ToFileUri(string path);
     }
 }
 #endif
