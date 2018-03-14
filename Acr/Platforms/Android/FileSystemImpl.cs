@@ -8,28 +8,22 @@ namespace Acr.IO
     {
         public FileSystemImpl()
         {
-            try
-            {
-                var ctx = Android.App.Application.Context;
-                this.AppData = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+            var ctx = Android.App.Application.Context;
+            this.Cache = new DirectoryInfo(ctx.CacheDir.AbsolutePath);
 
-                var ext = ctx.GetExternalFilesDir(null);
-                if (ext != null)
-                    this.Public = new DirectoryInfo(ext.AbsolutePath);
+            var rootPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            this.AppData = new DirectoryInfo(rootPath);
 
-                var cacheDir = ctx.GetExternalFilesDir(null);
-                if (cacheDir != null) {
-                    this.Cache = new DirectoryInfo(cacheDir.AbsolutePath);
-                    this.Temp = new DirectoryInfo(cacheDir.AbsolutePath);
-                }
-            }
-            catch { }
+            var publicDir = ctx.GetExternalFilesDir(null);
+            if (publicDir != null)
+                this.Public = new DirectoryInfo(publicDir.AbsolutePath);
         }
 
 
         public DirectoryInfo AppData { get; }
         public DirectoryInfo Cache { get; }
         public DirectoryInfo Public { get; }
-        public DirectoryInfo Temp { get; }
+
+        public string ToFileUri(string path) => "file:/" + path;
     }
 }

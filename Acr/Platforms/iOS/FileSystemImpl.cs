@@ -17,13 +17,15 @@ namespace Acr.IO
             var library = Path.Combine(documents, "..", "Library");
             this.AppData = new DirectoryInfo(library);
             this.Cache = new DirectoryInfo(Path.Combine(library, "Caches"));
-            this.Temp = new DirectoryInfo(Path.Combine(documents, "..", "tmp"));
             this.Public = new DirectoryInfo(documents);
         }
+
 
         public DirectoryInfo AppData { get; }
         public DirectoryInfo Cache { get; }
         public DirectoryInfo Public { get; }
-        public DirectoryInfo Temp { get; }
+
+
+        public string ToFileUri(string path) => path;
     }
 }
