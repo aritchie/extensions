@@ -22,6 +22,12 @@ namespace Acr.EfCore.Tests
     }
 
 
+    public class StateDbContext : BaseDbContext
+    {
+        public StateDbContext() : base("state") { }
+    }
+
+
     public class SoftDeleteDbContext : BaseDbContext
     {
         public SoftDeleteDbContext() : base("deletes") { }

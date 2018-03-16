@@ -11,10 +11,12 @@ namespace Acr.EfCore
         {
             this.OriginalState = entry.State;
             this.Entry = entry;
+            this.OriginalValues = this.Entry.OriginalValues.Clone();
         }
 
 
         public EntityState OriginalState { get; }
+        public PropertyValues OriginalValues { get; }
         public EntityEntry Entry { get; }
     }
 }
