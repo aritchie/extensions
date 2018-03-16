@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Acr.XamForms
+namespace Acr.XamForms.Pages
 {
     public class ContentPage : Xamarin.Forms.ContentPage
     {

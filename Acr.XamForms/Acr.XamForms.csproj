@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid70;MonoAndroid80;uap10.0</TargetFrameworks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Allan Ritchie</Authors>
     <Company />
@@ -14,8 +15,30 @@
     <PackageTags>acr xamarin</PackageTags>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.2" PrivateAssets="All" />
+        <Compile Include="**\*.shared.cs" />
+    </ItemGroup>
 
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+        <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+        <!--<Compile Include="**\*.netstandard.cs" />-->
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+        <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+        <Compile Include="**\*.android.cs" />
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+        <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+        <Compile Include="**\*.ios.cs" />
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
+        <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+        <Compile Include="**\*.uwp.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Pages\NavigationPage.shared.cs" />
+    </ItemGroup>
+
+    <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
