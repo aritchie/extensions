@@ -1,19 +1,52 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid70;MonoAndroid80;uap10.0</TargetFrameworks>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Allan Ritchie</Authors>
-    <Company />
-    <Product>ACR Xamarin Forms Extensions</Product>
-    <Description>ACR Xamarin Forms Extensions</Description>
-    <Version>3.0.0</Version>
-    <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
-    <PackageTags>acr xamarin</PackageTags>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid70;MonoAndroid80;uap10.0</TargetFrameworks>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Allan Ritchie</Authors>
+        <Company />
+        <Product>ACR Xamarin Forms Extensions</Product>
+        <Description>ACR Xamarin Forms Extensions</Description>
+        <Version>3.0.0</Version>
+        <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
+        <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
+        <PackageTags>acr xamarin</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0' ">
+        <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+        <DefineConstants>$(DefineConstants);NETSTANDARD;BAIT</DefineConstants>
+        <Product>Acr.XamForms - .NET Standard</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR '$(TargetFramework)' == 'MonoAndroid80' ">
+        <DefineConstants>$(DefineConstants);__ANDROID__</DefineConstants>
+        <Product>Acr.XamForms - Android</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
+        <DefineConstants>$(DefineConstants);__IOS__</DefineConstants>
+        <Product>Acr.XamForms - iOS</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
+        <DefineConstants>$(DefineConstants);__MACOS__</DefineConstants>
+        <Product>Acr.XamForms - macOS</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'tizen4' ">
+        <DefineConstants>$(DefineConstants);__TIZEN__</DefineConstants>
+        <Product>Acr.XamForms - Tizen</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
+        <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+        <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+        <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
+        <Product>Acr.XamForms - UWP</Product>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.2" PrivateAssets="All" />
@@ -24,7 +57,7 @@
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <!--<Compile Include="**\*.netstandard.cs" />-->
     </ItemGroup>
-    <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR $(TargetFramework) == 'MonoAndroid80' ">
+    <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR '$(TargetFramework)' == 'MonoAndroid80' ">
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <Compile Include="**\*.android.cs" />
     </ItemGroup>
@@ -35,6 +68,7 @@
     <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <Compile Include="**\*.uwp.cs" />
+        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.5" />
     </ItemGroup>
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
