@@ -14,7 +14,7 @@ namespace Acr.Tests
         public async Task WhenAnyValue_InitialValue()
         {
             var obj = new TestObject { Value = "hi" };
-            var value = await obj.WhenAnyValue(x => x.Value).Take(1).ToTask();
+            var value = await obj.RxWhenAnyValue(x => x.Value).Take(1).ToTask();
             value.Should().Be(obj.Value);
         }
 
@@ -24,7 +24,7 @@ namespace Acr.Tests
         {
             var update = "";
             var obj = new TestObject();
-            obj.WhenAnyValue(x => x.Value).Skip(1).Subscribe(value => update = value);
+            obj.RxWhenAnyValue(x => x.Value).Skip(1).Subscribe(value => update = value);
             obj.Value = "changed";
             update.Should().Be(obj.Value);
         }

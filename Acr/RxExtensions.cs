@@ -47,7 +47,7 @@ namespace Acr
             });
 
 
-        public static IObservable<TRet> WhenAnyValue<TSender, TRet>(this TSender This, Expression<Func<TSender, TRet>> expression) where TSender : INotifyPropertyChanged
+        public static IObservable<TRet> RxWhenAnyValue<TSender, TRet>(this TSender This, Expression<Func<TSender, TRet>> expression) where TSender : INotifyPropertyChanged
         {
             var p = This.GetPropertyInfo(expression);
             return Observable
@@ -62,13 +62,13 @@ namespace Acr
         }
 
 
-        public static IObservable<TSender> WhenAnyPropertyChanged<TSender>(this TSender This) where TSender : INotifyPropertyChanged
+        public static IObservable<TSender> RxWhenAnyPropertyChanged<TSender>(this TSender This) where TSender : INotifyPropertyChanged
             => Observable
                 .FromEventPattern<PropertyChangedEventArgs>(This, nameof(INotifyPropertyChanged.PropertyChanged))
                 .Select(x => This);
 
 
-        public static void ApplyMaxLengthConstraint<T>(this T npc, Expression<Func<T, string>> expression, int maxLength) where T : INotifyPropertyChanged
+        public static IDisposable ApplyMaxLengthConstraint<T>(this T npc, Expression<Func<T, string>> expression, int maxLength) where T : INotifyPropertyChanged
         {
             var property = npc.GetPropertyInfo(expression);
 
@@ -78,8 +78,8 @@ namespace Acr
             if (!property.CanWrite)
                 throw new ArgumentException($"You can only apply maxlength constraints to public setter properties - {npc.GetType()}.{property.Name}");
 
-            npc
-                .WhenAnyValue(expression)
+            return npc
+                .RxWhenAnyValue(expression)
                 .Where(x => x != null && x.Length > maxLength)
                 .Subscribe(x =>
                 {
