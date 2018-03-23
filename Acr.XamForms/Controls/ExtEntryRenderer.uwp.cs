@@ -1,11 +1,14 @@
 ﻿using System;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.UWP;
 using Xamarin.Forms.PlatformConfiguration;
+using Acr.XamForms.Controls;
 
 
+[assembly: ExportRenderer(typeof(ExtEntry), typeof(UwpExtEntryRenderer))]
 namespace Acr.XamForms.Controls
 {
-    public class ExtEntryRenderer : EntryRenderer
+    public class UwpExtEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {

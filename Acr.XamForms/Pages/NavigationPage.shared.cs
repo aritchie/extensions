@@ -7,10 +7,7 @@ namespace Acr.XamForms.Pages
     {
         public NavigationPage()
         {
-            this.Popped += (sender, args) =>
-            {
-                (args.Page.BindingContext as IViewModelLifecycle)?.OnDestroy();
-            };
+            this.Popped += (sender, args) => (args.Page.BindingContext as IViewModelLifecycle)?.OnDestroy();
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using Android.Views.InputMethods;
-using Plexxis.XamForms.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Acr.XamForms.Controls;
 
 
 [assembly: ExportRenderer(typeof(ExtEntry), typeof(AndroidExtEntryRenderer))]

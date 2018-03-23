@@ -8,7 +8,7 @@
     <Company />
     <Product>ACR Xamarin Forms Extensions</Product>
     <Description>ACR Xamarin Forms Extensions</Description>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
@@ -20,24 +20,21 @@
         <Compile Include="**\*.shared.cs" />
     </ItemGroup>
 
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0' ">
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <!--<Compile Include="**\*.netstandard.cs" />-->
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR $(TargetFramework) == 'MonoAndroid80' ">
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <Compile Include="**\*.android.cs" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <Compile Include="**\*.ios.cs" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
+    <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
         <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
         <Compile Include="**\*.uwp.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Remove="Pages\NavigationPage.shared.cs" />
     </ItemGroup>
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
