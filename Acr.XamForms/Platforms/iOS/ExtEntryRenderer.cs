@@ -6,10 +6,10 @@ using Xamarin.Forms.Platform.iOS;
 using Acr.XamForms.Controls;
 
 
-[assembly: ExportRenderer(typeof(ExtEntry), typeof(iOSExtEntryRenderer))]
+[assembly: ExportRenderer(typeof(ExtEntry), typeof(ExtEntryRenderer))]
 namespace Acr.XamForms.Controls
 {
-    public class iOSExtEntryRenderer : EntryRenderer
+    public class ExtEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {

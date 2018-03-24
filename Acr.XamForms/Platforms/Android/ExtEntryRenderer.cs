@@ -6,12 +6,12 @@ using Xamarin.Forms.Platform.Android;
 using Acr.XamForms.Controls;
 
 
-[assembly: ExportRenderer(typeof(ExtEntry), typeof(AndroidExtEntryRenderer))]
+[assembly: ExportRenderer(typeof(ExtEntry), typeof(ExtEntryRenderer))]
 namespace Acr.XamForms.Controls
 {
-    public class AndroidExtEntryRenderer : EntryRenderer
+    public class ExtEntryRenderer : EntryRenderer
     {
-        public AndroidExtEntryRenderer(Android.Content.Context context) : base(context) { }
+        public ExtEntryRenderer(Android.Content.Context context) : base(context) { }
 
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)

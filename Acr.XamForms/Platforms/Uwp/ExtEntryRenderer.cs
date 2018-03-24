@@ -5,10 +5,10 @@ using Xamarin.Forms.PlatformConfiguration;
 using Acr.XamForms.Controls;
 
 
-[assembly: ExportRenderer(typeof(ExtEntry), typeof(UwpExtEntryRenderer))]
+[assembly: ExportRenderer(typeof(ExtEntry), typeof(ExtEntryRenderer))]
 namespace Acr.XamForms.Controls
 {
-    public class UwpExtEntryRenderer : EntryRenderer
+    public class ExtEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
