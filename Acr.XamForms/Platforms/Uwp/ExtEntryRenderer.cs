@@ -1,7 +1,7 @@
 ﻿using System;
+using Windows.System;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
-using Xamarin.Forms.PlatformConfiguration;
 using Acr.XamForms.Controls;
 
 
@@ -16,13 +16,12 @@ namespace Acr.XamForms.Controls
 
             if (this.Control != null && this.Element is ExtEntry entry)
             {
-                this.Control.KeyDown += (object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs eventArgs) =>
+                this.Control.KeyDown += (sender, args) =>
                 {
-                    if (eventArgs.Key == Windows.System.VirtualKey.Enter)
+                    if (args.Key == VirtualKey.Enter)
                     {
-                        entry.InvokeCompleted();
-                        // Make sure to set the Handled to true, otherwise the RoutedEvent might fire twice
-                        eventArgs.Handled = true;
+                        //entry.InvokeCompleted();
+                        args.Handled = true;
                     }
                 };
             }

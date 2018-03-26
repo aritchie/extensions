@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Acr.XamForms.Controls;assembly=Acr.XamForms"
+             xmlns:pages="clr-namespace:Acr.XamForms.Pages;assembly=Acr.XamForms"
+             x:Class="Samples.PicturePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <controls:CameraView TakePhotoCommand="{Binding}"
+                                 PhotoFilePath="{Binding}"
+                                 Camera="Front" />
+            <Button Text="Switch Camera" Command="{Binding}" />
+            <Button Text="Take Photo" Command="{Binding}" />
+        </StackLayout>
+    </ContentPage.Content>
+</pages:ContentPage>
