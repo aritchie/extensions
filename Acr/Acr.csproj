@@ -12,20 +12,15 @@
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
         <AssemblyName>Acr.Core</AssemblyName>
-        <Version>1.2.0</Version>
+        <Version>1.3.0</Version>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <DefineConstants>$(DefineConstants);NETSTANDARD20</DefineConstants>
-        <Product>ACR Core Extensions - .NET Standard 2</Product>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0' ">
+        <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+        <Product>ACR Core Extensions - .NET Standard</Product>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
-        <DefineConstants>$(DefineConstants);NETSTANDARD10</DefineConstants>
-        <Product>ACR Core Extensions - .NET Standard 1.0</Product>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' OR '$(TargetFramework)' == 'MonoAndroid70' ">
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR '$(TargetFramework)' == 'MonoAndroid80' ">
         <DefineConstants>$(DefineConstants);__ANDROID__</DefineConstants>
         <Product>ACR Core Extensions - Android</Product>
     </PropertyGroup>
@@ -39,7 +34,7 @@
         <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
         <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
         <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
-        <Product>ACR Core Extensions - iOS</Product>
+        <Product>ACR Core Extensions - UWP</Product>
     </PropertyGroup>
 
     <ItemGroup>
@@ -63,7 +58,7 @@
         <Compile Include="Platforms\Android\**\*.cs" />
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'uap10' ">
+    <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
         <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Uwp\**\*.cs" />
         <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.5" />

@@ -18,5 +18,6 @@ namespace Acr.IO
         public DirectoryInfo AppData { get; }
         public DirectoryInfo Cache { get; }
         public DirectoryInfo Public { get; }
+        public string ToFileUri(string path) => path; // TODO: need that ms-appx shit
     }
 }
