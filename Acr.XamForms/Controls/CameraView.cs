@@ -16,9 +16,12 @@ namespace Acr.XamForms.Controls
             nameof(IsFeedEnabled),
             typeof(bool),
             typeof(CameraView),
-            null,
-            BindingMode.OneWayToSource
+            true,
+            BindingMode.OneWay
         );
+        /// <summary>
+        /// Setting this to false will freeze the camera stream, true sets the stream to live
+        /// </summary>
         public bool IsFeedEnabled
         {
             get => (bool)this.GetValue(IsFeedEnabledProperty);
@@ -37,6 +40,19 @@ namespace Acr.XamForms.Controls
         {
             get => (string)this.GetValue(PhotoFilePathProperty);
             set => this.SetValue(PhotoFilePathProperty, value);
+        }
+
+
+        public static readonly BindableProperty PhotoTypeProperty = BindableProperty.Create(
+            nameof(PhotoType),
+            typeof(PhotoImageType),
+            typeof(CameraView),
+            PhotoImageType.Png
+        );
+        public PhotoImageType PhotoType
+        {
+            get => (PhotoImageType)this.GetValue(PhotoTypeProperty);
+            set => this.SetValue(PhotoTypeProperty, value);
         }
 
 
