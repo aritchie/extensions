@@ -15,16 +15,32 @@ namespace Acr.XamForms.Controls
             base.OnElementChanged(e);
 
             if (this.Control != null && this.Element is ExtEntry entry)
+                this.Setup(entry);
+        }
+
+
+
+        protected virtual void Setup(ExtEntry entry)
+        {
+            this.Control.KeyDown += (sender, args) =>
             {
-                this.Control.KeyDown += (sender, args) =>
+                switch (args.Key)
                 {
-                    if (args.Key == VirtualKey.Enter)
-                    {
-                        //entry.InvokeCompleted();
+                    case VirtualKey.Tab:
+                        entry.OnNext();
                         args.Handled = true;
-                    }
-                };
-            }
+                        break;
+
+                    case VirtualKey.Enter:
+                        entry.OnNext();
+                        if (entry.ReturnCommand != null && entry.ReturnCommand.CanExecute(null))
+                            entry.ReturnCommand.Execute(null);
+
+                        args.Handled = true;
+                        break;
+                }
+
+            };
         }
     }
 }
