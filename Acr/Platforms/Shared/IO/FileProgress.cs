@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD10
-using System;
+﻿using System;
 
 
 namespace Acr.IO
@@ -26,7 +25,6 @@ namespace Acr.IO
         }
     }
 }
-#endif
 /*
 public class DirectoryProgress
 {

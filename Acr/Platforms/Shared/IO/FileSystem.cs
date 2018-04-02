@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD10
-using System;
+﻿using System;
 
 
 namespace Acr.IO
@@ -11,7 +10,7 @@ namespace Acr.IO
         {
             get
             {
-#if NETSTANDARD20
+#if NETSTANDARD
                 if (current == null)
                     throw new Exception("[Acr.IO] Platform implementation not found.  Have you added a nuget reference to your platform project?");
 #else
@@ -23,4 +22,3 @@ namespace Acr.IO
         }
     }
 }
-#endif
