@@ -1,10 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10;uap10.0</TargetFrameworks>
+        <TargetFrameworks></TargetFrameworks>
+        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.0;netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10;Xamarin.Mac20;xamarin.tvOS10;uap10.0</TargetFrameworks>
+        <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.0;netstandard2.0;MonoAndroid70;MonoAndroid80;Xamarin.iOS10;Xamarin.Mac20;xamarin.tvOS10;</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Allan Ritchie</Authors>
         <Company />
+        <Product>ACR Core Extensions ($(TargetFramework))</Product>
         <Description>ACR Core Extensions</Description>
         <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
         <RepositoryUrl></RepositoryUrl>
@@ -12,57 +15,52 @@
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
         <AssemblyName>Acr.Core</AssemblyName>
-        <Version>1.2.2</Version>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
-        <Product>ACR Core Extensions - .NET Standard</Product>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR '$(TargetFramework)' == 'MonoAndroid80' ">
-        <DefineConstants>$(DefineConstants);__ANDROID__</DefineConstants>
-        <Product>ACR Core Extensions - Android</Product>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
-        <DefineConstants>$(DefineConstants);__IOS__</DefineConstants>
-        <Product>ACR Core Extensions - iOS</Product>
+        <Version>1.3.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
         <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
         <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
-        <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
-        <Product>ACR Core Extensions - UWP</Product>
     </PropertyGroup>
 
     <ItemGroup>
         <Compile Remove="Platforms\**\*.cs" />
         <None Include="Platforms\**\*.cs" />
+        <Compile Include="Platforms\Shared\**\*.cs" />
+        <None Remove="Platforms\Android\FileSystem.cs" />
+        <None Remove="Platforms\netstandard20\FileSystem.cs" />
+        <None Remove="Platforms\Uwp\FileSystem.cs" />
+        <Compile Include="Platforms\Android\FileSystem.cs" />
+        <Compile Include="Platforms\iOS\FileSystem.cs" />
+        <Compile Include="Platforms\Uwp\FileSystem.cs" />
         <PackageReference Include="System.Reactive" Version="3.1.1" />
-        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.2" PrivateAssets="all" />
+        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.3.1" PrivateAssets="all" />
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <Compile Include="Platforms\Shared\**\*.cs" />
+    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+        <Compile Include="Platforms\netstandard10\**\*.cs" />
+    </ItemGroup>
+
+    <ItemGroup Condition="  '$(TargetFramework)' == 'netstandard2.0' ">
+        <Compile Include="Platforms\netstandard20\**\*.cs" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
-        <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\iOS\**\*.cs" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid70' OR '$(TargetFramework)' == 'MonoAndroid80' ">
-        <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Android\**\*.cs" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-        <Compile Include="Platforms\Shared\**\*.cs" />
         <Compile Include="Platforms\Uwp\**\*.cs" />
-        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.5" />
+        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.8" />
         <EmbeddedResource Include="Platforms\Uwp\Acr.rd.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Platforms\netstandard20\" />
     </ItemGroup>
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
