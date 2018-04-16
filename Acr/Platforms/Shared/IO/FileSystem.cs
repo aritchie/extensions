@@ -16,7 +16,7 @@ namespace Acr.IO
 
                 return current;
             }
-            set { current = value; }
+            set => current = value;
         }
     }
 }

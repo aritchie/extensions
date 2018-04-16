@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 
-namespace Acr
+namespace Acr.ComponentModel
 {
     public class NotifyPropertyChanged : INotifyPropertyChanged
     {
