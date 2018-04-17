@@ -5,9 +5,10 @@ using System.Linq.Expressions;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Acr.Reflection;
 
 
-namespace Acr
+namespace Acr.Reactive
 {
     public static class RxExtensions
     {

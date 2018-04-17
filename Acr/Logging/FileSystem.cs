@@ -1,24 +1,23 @@
-﻿using System;
+﻿#if !NETSTANDARD10
+using System;
 
 
 namespace Acr.IO
 {
-    public static class FileSystem
+    public static partial class FileSystem
     {
         static IFileSystem current;
         public static IFileSystem Current
         {
             get
             {
-#if NETSTANDARD
                 if (current == null)
-                    throw new Exception("[Acr.IO] Platform implementation not found.  Have you added a nuget reference to your platform project?");
-#else
-                current = current ?? new FileSystemImpl();
-#endif
+                    throw new Exception("[Acr.Core] FileSystem platform implementation not found.  Have you added a nuget reference to your platform project?");
+
                 return current;
             }
-            set { current = value; }
+            set => current = value;
         }
     }
 }
+#endif

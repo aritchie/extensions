@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 
-namespace Acr
+namespace Acr.Reflection
 {
     public static class ReflectionExtensions
     {

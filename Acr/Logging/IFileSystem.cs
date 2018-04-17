@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD10
+using System;
 using System.IO;
 
 
@@ -13,3 +14,4 @@ namespace Acr.IO
         string ToFileUri(string path);
     }
 }
+#endif

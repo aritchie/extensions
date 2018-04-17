@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
 
-namespace Acr
+namespace Acr.Reactive
 {
     public class ClearableReplaySubject<TSource, TClearTrigger> : IConnectableObservable<TSource>
     {

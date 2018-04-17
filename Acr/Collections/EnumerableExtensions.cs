@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Acr
+namespace Acr.Collections
 {
     public static class EnumerableExtensions
     {
