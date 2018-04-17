@@ -15,12 +15,12 @@
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
         <AssemblyName>Acr.Core</AssemblyName>
-        <Version>2.0.1</Version>
+        <Version>2.0.2</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
         <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-        <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+        <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -60,6 +60,7 @@
     <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
         <Compile Include="Platforms\Uwp\**\*.cs" />
         <EmbeddedResource Include="Platforms\Uwp\Acr.rd.xml" />
+        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" />
     </ItemGroup>
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
