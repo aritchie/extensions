@@ -48,7 +48,7 @@ namespace Acr.Reactive
             });
 
 
-        public static IObservable<TRet> WhenAnyValue<TSender, TRet>(this TSender This, Expression<Func<TSender, TRet>> expression) where TSender : INotifyPropertyChanged
+        public static IObservable<TRet> RxWhenAnyValue<TSender, TRet>(this TSender This, Expression<Func<TSender, TRet>> expression) where TSender : INotifyPropertyChanged
         {
             var p = This.GetPropertyInfo(expression);
             return Observable
@@ -63,7 +63,7 @@ namespace Acr.Reactive
         }
 
 
-        public static IObservable<TSender> WhenAnyPropertyChanged<TSender>(this TSender This) where TSender : INotifyPropertyChanged
+        public static IObservable<TSender> RxWhenAnyPropertyChanged<TSender>(this TSender This) where TSender : INotifyPropertyChanged
             => Observable
                 .FromEventPattern<PropertyChangedEventArgs>(This, nameof(INotifyPropertyChanged.PropertyChanged))
                 .Select(x => This);
@@ -80,7 +80,7 @@ namespace Acr.Reactive
                 throw new ArgumentException($"You can only apply maxlength constraints to public setter properties - {npc.GetType()}.{property.Name}");
 
             npc
-                .WhenAnyValue(expression)
+                .RxWhenAnyValue(expression)
                 .Where(x => x != null && x.Length > maxLength)
                 .Subscribe(x =>
                 {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿#if !NETSTANDARD1_0
+using System;
 using System.Collections.Concurrent;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 
 
-namespace Acr
+namespace Acr.Reactive
 {
     public class ObservableQueue
     {
@@ -64,3 +65,4 @@ namespace Acr
         }
     }
 }
+#endif

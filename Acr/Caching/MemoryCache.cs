@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Acr.Cache.Impl;
 
 
 namespace Acr.Caching

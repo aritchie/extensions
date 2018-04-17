@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD10
+﻿#if !NETSTANDARD1_0
 using System;
 
 

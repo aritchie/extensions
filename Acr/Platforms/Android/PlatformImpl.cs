@@ -1,6 +1,6 @@
 ﻿using System;
-using Foundation;
-using UIKit;
+using System.Threading;
+using Android.App;
 
 
 namespace Acr
@@ -9,10 +9,10 @@ namespace Acr
     {
         public void InvokeOnMainThread(Action action)
         {
-            if (NSThread.Current.IsMainThread)
+            if (Application.SynchronizationContext == SynchronizationContext.Current)
                 action();
             else
-                UIApplication.SharedApplication.InvokeOnMainThread(action);
+                Application.SynchronizationContext.Post(_ => action(), null);
         }
     }
 }
