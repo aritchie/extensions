@@ -23,6 +23,19 @@ namespace Acr.Reactive
         }
 
 
+        public static IObservable<List<TOut>> SelectEach<TIn, TOut>(this IObservable<List<TIn>> observable, Func<TIn, TOut> transform) =>
+            observable.Select(data =>
+            {
+                var list = new List<TOut>();
+                foreach (var item in data)
+                {
+                    var t = transform(item);
+                    list.Add(t);
+                }
+                return list;
+            });
+
+
         public static IObservable<List<Timestamped<T>>> BufferWhile<T>(this IObservable<T> thisObs, Func<T, bool> predicate)
             => Observable.Create<List<Timestamped<T>>>(ob =>
             {
