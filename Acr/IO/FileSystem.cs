@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD1_0
-using System;
+﻿using System;
 
 
 namespace Acr.IO
@@ -20,4 +19,3 @@ namespace Acr.IO
         }
     }
 }
-#endif
