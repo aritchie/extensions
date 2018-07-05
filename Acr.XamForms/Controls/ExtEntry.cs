@@ -45,16 +45,16 @@ namespace Acr.XamForms.Controls
         }
 
 
-        public static readonly BindableProperty ReturnCommandProperty = BindableProperty.Create(
-            nameof(ReturnCommand),
-            typeof(ICommand),
-            typeof(ExtEntry)
-        );
-        public ICommand ReturnCommand
-        {
-            get => (ICommand)this.GetValue(ReturnCommandProperty);
-            set => this.SetValue(ReturnCommandProperty, value);
-        }
+        //public static readonly BindableProperty ReturnCommandProperty = BindableProperty.Create(
+        //    nameof(ReturnCommand),
+        //    typeof(ICommand),
+        //    typeof(ExtEntry)
+        //);
+        //public ICommand ReturnCommand
+        //{
+        //    get => (ICommand)this.GetValue(ReturnCommandProperty);
+        //    set => this.SetValue(ReturnCommandProperty, value);
+        //}
 
 
         public virtual void OnNext() => this.NextView?.Focus();
