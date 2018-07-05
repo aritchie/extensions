@@ -3,15 +3,6 @@
 
 namespace Acr.Logging
 {
-    public enum LogLevel
-    {
-        Debug = 0,
-        Info = 1,
-        Warn = 2,
-        Error = 3
-    }
-
-
     public static class Log
     {
         static Log()
@@ -35,5 +26,11 @@ namespace Acr.Logging
             if (level >= MinLogLevel)
                 Out?.Invoke(category, msg, level);
         }
+
+
+#if !NETSTANDARD1_0
+        public static void ToConsole() => Out = (cat, msg, level) => Console.WriteLine($"[{level}][{cat}] {msg}");
+#endif
+        public static void ToDebug() => Out = (cat, msg, level) => System.Diagnostics.Debug.WriteLine($"[{level}][{cat}] {msg}");
     }
 }

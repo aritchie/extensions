@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,14 +11,14 @@
     <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
     <RepositoryUrl></RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/changelog.md</PackageReleaseNotes>
-    <Version>2.0.5</Version>
+    <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/efcore_changelog.md</PackageReleaseNotes>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.1" />
-    <PackageReference Include="System.Reactive" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.1" />
+    <PackageReference Include="System.Reactive" Version="[3.1.1, 5)" />
   </ItemGroup>
 
 </Project>

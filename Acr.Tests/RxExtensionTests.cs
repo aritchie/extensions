@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using Acr.Reactive;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;

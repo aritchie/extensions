@@ -1,4 +1,5 @@
 ﻿using System;
+using Acr.ComponentModel;
 
 
 namespace Acr.Tests
