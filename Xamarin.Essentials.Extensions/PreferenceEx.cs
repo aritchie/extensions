@@ -22,6 +22,11 @@ namespace Xamarin.Essentials.Extensions
 
         public static void Set<T>(string key, T obj)
         {
+            if (typeof(T) == typeof(int))
+            {
+                Preferences.Set(key, (int)value);
+            }
+
             var json = JsonConvert.SerializeObject(obj);
             Preferences.Set(key, json);
         }

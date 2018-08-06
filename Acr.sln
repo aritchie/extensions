@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{3D0367
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4CD7609F-CFC7-4DBE-9BE2-2C305001FB84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Essentials.Extensions", "Xamarin.Essentials.Extensions\Xamarin.Essentials.Extensions.csproj", "{7B587D38-2F45-4EE5-B0B7-B8CB34D28C92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin.Essentials.Extensions", "Xamarin.Essentials.Extensions\Xamarin.Essentials.Extensions.csproj", "{7B587D38-2F45-4EE5-B0B7-B8CB34D28C92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
