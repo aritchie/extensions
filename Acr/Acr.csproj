@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.Mac20;xamarin.tvOS10;uap10.0</TargetFrameworks>
-        <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.Mac20;xamarin.tvOS10;</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;MonoAndroid80;Xamarin.iOS10;xamarin.TVOS10;uap10.0</TargetFrameworks>
+        <!--<TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.Mac20;xamarin.TVOS10;uap10.0</TargetFrameworks>
+        <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.Mac20;xamarin.TVOS10;</TargetFrameworks>-->
         <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
         <Authors>aritchie</Authors>
         <Company />
         <Product>ACR Core Extensions ($(TargetFramework))</Product>
         <Description>ACR Core Extensions</Description>
         <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
-        <RepositoryUrl></RepositoryUrl>
+        <RepositoryUrl>https://github.com/aritchie/extensions</RepositoryUrl>
         <PackageTags>ios android uwp windows utils acr io</PackageTags>
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/core_changelog.md</PackageReleaseNotes>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
@@ -37,21 +38,23 @@
     <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
         <Compile Include="Platforms\Apple\**\*.cs" />
         <Compile Include="Platforms\macOS\**\*.cs" />
+        <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     </ItemGroup>
 
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.tvOS')) ">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
         <Compile Include="Platforms\Apple\**\*.cs" />
         <Compile Include="Platforms\tvOS\**\*.cs" />
     </ItemGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
         <Compile Include="Platforms\Android\**\*.cs" />
+        <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     </ItemGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
         <Compile Include="Platforms\Uwp\**\*.cs" />
         <EmbeddedResource Include="Platforms\Uwp\Acr.rd.xml" />
-        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.8" PrivateAssets="All" />
     </ItemGroup>
 
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />

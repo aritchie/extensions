@@ -20,14 +20,14 @@ namespace Xamarin.Essentials.Extensions
         }
 
 
-        public static void Set<T>(string key, T obj)
+        public static void Set<T>(string key, T value)
         {
             if (typeof(T) == typeof(int))
             {
-                Preferences.Set(key, (int)value);
+                //Preferences.Set(key, (int)value);
             }
 
-            var json = JsonConvert.SerializeObject(obj);
+            var json = JsonConvert.SerializeObject(value);
             Preferences.Set(key, json);
         }
 
@@ -53,7 +53,7 @@ namespace Xamarin.Essentials.Extensions
                 if (Preferences.ContainsKey(key))
                 {
                     //var value = GetValue(prop.PropertyType, key);
-                    prop.SetValue(obj, value);
+                    //prop.SetValue(obj, value);
                 }
             }
             obj.PropertyChanged += OnPropertyChanged;

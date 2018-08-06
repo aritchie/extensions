@@ -11,7 +11,7 @@ namespace Xamarin.Essentials.Extensions
         {
             obs = obs ?? Observable.Create<AccelerometerChangedEventArgs>(ob =>
             {
-                var handler = new AccelerometerChangedEventHandler(ob.OnNext);
+                var handler = new EventHandler<AccelerometerChangedEventArgs>((sender, args) => ob.OnNext(args));
                 Accelerometer.ReadingChanged += handler;
                 Accelerometer.Start(SensorSpeed.Fastest);
                 return () =>
