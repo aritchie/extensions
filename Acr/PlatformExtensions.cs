@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Acr.Reactive;
@@ -28,8 +29,8 @@ namespace Acr
             });
 
 
-        public static IObservable<Unit> ObserveOnMainThread<Unit>(this IPlatform platform, Action action)
-            => platform.ObserveOnMainThread<Unit>(() =>
+        public static IObservable<Unit> ObserveOnMainThread(this IPlatform platform, Action action)
+            => platform.ObserveOnMainThread(() =>
             {
                 action();
                 return Unit.Default;
