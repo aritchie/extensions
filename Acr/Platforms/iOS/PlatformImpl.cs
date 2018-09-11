@@ -12,7 +12,7 @@ namespace Acr
             if (NSThread.Current.IsMainThread)
                 action();
             else
-                UIApplication.SharedApplication.InvokeOnMainThread(action);
+                UIApplication.SharedApplication.BeginInvokeOnMainThread(action);
         }
     }
 }

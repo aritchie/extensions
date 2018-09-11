@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Acr.Reactive;
@@ -9,41 +8,31 @@ namespace Acr
 {
     public static class PlatformExtensions
     {
-        public static IObservable<T> InvokeOnMainThread<T>(this IPlatform platform, Func<T> func) => Observable.Create<T>(ob =>
-        {
-            platform.InvokeOnMainThread(() =>
+        public static IObservable<T> ObserveOnMainThread<T>(this IPlatform platform, Func<T> func)
+            => Observable.Create<T>(ob =>
             {
-                try
+                platform.InvokeOnMainThread(() =>
                 {
-                    var result = func();
-                    ob.Respond(result);
-                }
-                catch (Exception ex)
-                {
-                    ob.OnError(ex);
-                }
+                    try
+                    {
+                        var result = func();
+                        ob.Respond(result);
+                    }
+                    catch (Exception ex)
+                    {
+                        ob.OnError(ex);
+                    }
+                });
+
+                return Disposable.Empty;
             });
 
-            return Disposable.Empty;
-        });
 
-
-        public static IObservable<Unit> InvokeOnMainThread<T>(this IPlatform platform, Action action) => Observable.Create<Unit>(ob =>
-        {
-            platform.InvokeOnMainThread(() =>
+        public static IObservable<Unit> ObserveOnMainThread<Unit>(this IPlatform platform, Action action)
+            => platform.ObserveOnMainThread<Unit>(() =>
             {
-                try
-                {
-                    action();
-                    ob.Respond(Unit.Default);
-                }
-                catch (Exception ex)
-                {
-                    ob.OnError(ex);
-                }
+                action();
+                return Unit.Default;
             });
-
-            return Disposable.Empty;
-        });
     }
 }

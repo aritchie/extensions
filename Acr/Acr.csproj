@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.52">
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;MonoAndroid80;Xamarin.iOS10;xamarin.TVOS10;uap10.0</TargetFrameworks>
@@ -16,6 +16,24 @@
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
         <AssemblyName>Acr.Core</AssemblyName>
         <Version>2.2.0</Version>
+
+        <RepositoryUrl>https://github.com/aritchie/extensions</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <IncludeSymbols>True</IncludeSymbols>
+        <IncludeSource>True</IncludeSource>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DebugType>pdbonly</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
@@ -27,7 +45,7 @@
         <Compile Remove="Platforms\**\*.cs" />
         <None Include="Platforms\**\*.cs" />
         <PackageReference Include="System.Reactive" Version="4.0.0" />
-        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.46" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
@@ -54,8 +72,5 @@
     <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
         <Compile Include="Platforms\Uwp\**\*.cs" />
         <EmbeddedResource Include="Platforms\Uwp\Acr.rd.xml" />
-        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.8" PrivateAssets="All" />
     </ItemGroup>
-
-    <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
