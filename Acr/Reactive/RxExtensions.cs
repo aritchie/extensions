@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Acr.Reflection;
@@ -10,6 +12,19 @@ using Acr.Reflection;
 
 namespace Acr.Reactive
 {
+    public class ItemChanged<T, TRet>
+    {
+        public ItemChanged(T obj, TRet value)
+        {
+            this.Object = obj;
+            this.Value = value;
+        }
+
+        public T Object { get; }
+        public TRet Value { get; }
+    }
+
+
     public static class RxExtensions
     {
         public static IConnectableObservable<TItem> ReplayWithReset<TItem, TReset>(this IObservable<TItem> src, IObservable<TReset> resetTrigger)
@@ -61,6 +76,36 @@ namespace Acr.Reactive
             });
 
 
+        public static IObservable<ItemChanged<T, string>> WhenItemChanged<T>(this ObservableCollection<T> collection)
+            where T : INotifyPropertyChanged
+            => Observable.Create<ItemChanged<T, string>>(ob =>
+            {
+                var disp = new CompositeDisposable();
+                foreach (var item in collection)
+                    disp.Add(item.RxWhenAnyPropertyChanged().Subscribe(ob.OnNext));
+
+                return disp;
+            });
+
+
+        public static IObservable<ItemChanged<T, TRet>> WhenItemValueChanged<T, TRet>(
+            this ObservableCollection<T> collection,
+            Expression<Func<T, TRet>> expression) where T : INotifyPropertyChanged =>
+            Observable.Create<ItemChanged<T, TRet>>(ob =>
+            {
+                var disp = new CompositeDisposable();
+                foreach (var item in collection)
+                {
+                    disp.Add(item
+                        .RxWhenAnyValue(expression)
+                        .Subscribe(x => ob.OnNext(new ItemChanged<T, TRet>(item, x)))
+                    );
+                }
+
+                return disp;
+            });
+
+
         public static IObservable<TRet> RxWhenAnyValue<TSender, TRet>(this TSender This, Expression<Func<TSender, TRet>> expression) where TSender : INotifyPropertyChanged
         {
             var p = This.GetPropertyInfo(expression);
@@ -76,10 +121,10 @@ namespace Acr.Reactive
         }
 
 
-        public static IObservable<TSender> RxWhenAnyPropertyChanged<TSender>(this TSender This) where TSender : INotifyPropertyChanged
+        public static IObservable<ItemChanged<TSender, string>> RxWhenAnyPropertyChanged<TSender>(this TSender This) where TSender : INotifyPropertyChanged
             => Observable
                 .FromEventPattern<PropertyChangedEventArgs>(This, nameof(INotifyPropertyChanged.PropertyChanged))
-                .Select(x => This);
+                .Select(x => new ItemChanged<TSender, string>(This, x.EventArgs.PropertyName));
 
 
         public static IDisposable ApplyMaxLengthConstraint<T>(this T npc, Expression<Func<T, string>> expression, int maxLength) where T : INotifyPropertyChanged
