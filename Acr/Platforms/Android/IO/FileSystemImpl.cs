@@ -9,11 +9,9 @@ namespace Acr.IO
         public FileSystemImpl()
         {
             var ctx = Android.App.Application.Context;
+
+            this.AppData = new DirectoryInfo(ctx.FilesDir.AbsolutePath);
             this.Cache = new DirectoryInfo(ctx.CacheDir.AbsolutePath);
-
-            var rootPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            this.AppData = new DirectoryInfo(rootPath);
-
             var publicDir = ctx.GetExternalFilesDir(null);
             if (publicDir != null)
                 this.Public = new DirectoryInfo(publicDir.AbsolutePath);
