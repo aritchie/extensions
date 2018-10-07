@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 
 
-namespace Acr.XamForms.Behaviors
+namespace Acr.XamForms
 {
     public class EventToCommandBehavior : AbstractBindableBehavior<View>
     {

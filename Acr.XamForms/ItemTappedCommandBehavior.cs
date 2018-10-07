@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 
 
-namespace Acr.XamForms.Behaviors
+namespace Acr.XamForms
 {
     public class ItemTappedCommandBehavior : AbstractBindableBehavior<ListView>
     {

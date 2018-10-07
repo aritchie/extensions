@@ -2,11 +2,11 @@
 using Windows.System;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
-using Acr.XamForms.Controls;
+using Acr.XamForms;
 
 
 [assembly: ExportRenderer(typeof(ExtEntry), typeof(ExtEntryRenderer))]
-namespace Acr.XamForms.Controls
+namespace Acr.XamForms
 {
     public class ExtEntryRenderer : EntryRenderer
     {

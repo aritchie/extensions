@@ -3,7 +3,7 @@ using System.Globalization;
 using Xamarin.Forms;
 
 
-namespace Acr.XamForms.Converters
+namespace Acr.XamForms
 {
 	public class InverseBooleanConverter : IValueConverter
 	{

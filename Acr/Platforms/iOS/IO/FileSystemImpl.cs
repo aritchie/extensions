@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using Foundation;
-using UIKit;
 
 
 namespace Acr.IO
@@ -11,24 +10,15 @@ namespace Acr.IO
     {
         public FileSystemImpl()
         {
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
-            {
-                this.AppData = ToDirectory(NSSearchPathDirectory.LibraryDirectory);
-                this.Public = ToDirectory(NSSearchPathDirectory.DocumentDirectory);
-                this.Cache = ToDirectory(NSSearchPathDirectory.CachesDirectory);
-            }
-            else
-            {
-                this.Public = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
-                this.AppData = new DirectoryInfo(Path.Combine(this.Public.Parent.FullName, "Library"));
-                this.Cache = new DirectoryInfo(Path.Combine(this.AppData.FullName, "Caches"));
-            }
+            this.AppData = ToDirectory(NSSearchPathDirectory.LibraryDirectory);
+            this.Public = ToDirectory(NSSearchPathDirectory.DocumentDirectory);
+            this.Cache = ToDirectory(NSSearchPathDirectory.CachesDirectory);
         }
 
 
-        public DirectoryInfo AppData { get; }
-        public DirectoryInfo Cache { get; }
-        public DirectoryInfo Public { get; }
+        public DirectoryInfo AppData { get; set; }
+        public DirectoryInfo Cache { get; set; }
+        public DirectoryInfo Public { get; set; }
 
 
         public string ToFileUri(string path) => path;

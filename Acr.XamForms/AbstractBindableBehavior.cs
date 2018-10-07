@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 
 
-namespace Acr.XamForms.Behaviors
+namespace Acr.XamForms
 {
     public abstract class AbstractBindableBehavior<T> : Behavior<T> where T : BindableObject
     {

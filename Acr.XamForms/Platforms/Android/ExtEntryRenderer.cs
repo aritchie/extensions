@@ -3,11 +3,11 @@ using System.ComponentModel;
 using Android.Views.InputMethods;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using Acr.XamForms.Controls;
+using Acr.XamForms;
 
 
 [assembly: ExportRenderer(typeof(ExtEntry), typeof(ExtEntryRenderer))]
-namespace Acr.XamForms.Controls
+namespace Acr.XamForms
 {
     public class ExtEntryRenderer : EntryRenderer
     {
