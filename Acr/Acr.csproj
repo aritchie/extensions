@@ -41,7 +41,6 @@
     <ItemGroup>
         <Compile Remove="Platforms\**\*.cs" />
         <None Include="Platforms\**\*.cs" />
-        <None Remove="Platforms\netstandard\IO\FileSystemImpl.cs" />
         <PackageReference Include="System.Reactive" Version="4.0.0" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
     </ItemGroup>
@@ -74,7 +73,4 @@
         <Compile Include="Platforms\Uwp\**\*.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="Platforms\netstandard\IO\FileSystem.cs" />
-    </ItemGroup>
 </Project>
