@@ -3,7 +3,7 @@ using System.IO;
 using Acr.IO;
 
 
-namespace Acr.Platforms.netstandard.IO
+namespace Acr
 {
     public class FileSystemImpl : IFileSystem
     {
