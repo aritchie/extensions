@@ -29,6 +29,7 @@ namespace Acr.XamForms
 
         protected virtual void Setup(ExtEntry entry)
         {
+            //this.Control.ClearButtonMode = UITextFieldViewMode.UnlessEditing;
             this.Control.ReturnKeyType = this.GetValueFromDescription(entry.ReturnKeyType);
             this.Control.ShouldReturn += txt =>
             {
@@ -61,7 +62,7 @@ namespace Acr.XamForms
                         return (UIReturnKeyType)field.GetValue(null);
                 }
             }
-            throw new NotSupportedException($"Not supported on iOS: {value}");
+            return UIReturnKeyType.Done;
         }
     }
 }

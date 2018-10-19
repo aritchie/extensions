@@ -19,7 +19,6 @@ namespace Acr.XamForms
         }
 
 
-
         protected virtual void Setup(ExtEntry entry)
         {
             this.Control.KeyDown += (sender, args) =>
@@ -39,7 +38,6 @@ namespace Acr.XamForms
                         args.Handled = true;
                         break;
                 }
-
             };
         }
     }

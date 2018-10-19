@@ -47,7 +47,9 @@ namespace Acr.XamForms
         protected virtual ImeAction GetValueFromDescription(ReturnKeyTypes value)
         {
             var type = typeof(ImeAction);
-            if (!type.IsEnum) throw new InvalidOperationException();
+            if (!type.IsEnum)
+                throw new InvalidOperationException();
+
             foreach (var field in type.GetFields())
             {
                 var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
@@ -62,7 +64,7 @@ namespace Acr.XamForms
                         return (ImeAction)field.GetValue(null);
                 }
             }
-            throw new NotSupportedException($"Not supported on Android: {value}");
+            return ImeAction.Done;
         }
     }
 }

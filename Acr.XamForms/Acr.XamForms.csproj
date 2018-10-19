@@ -8,7 +8,7 @@
         <Company />
         <Product>ACR Xamarin Forms Extensions</Product>
         <Description>ACR Xamarin Forms Extensions</Description>
-        <Version>4.0.0</Version>
+        <Version>4.0.1</Version>
         <PackageLicenseUrl>https://github.com/aritchie/extensions/blob/master/LICENSE.md</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/aritchie/extensions</PackageProjectUrl>
         <PackageReleaseNotes>https://github.com/aritchie/extensions/blob/master/xamforms_changelog.md</PackageReleaseNotes>
