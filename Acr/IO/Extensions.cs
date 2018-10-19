@@ -73,20 +73,32 @@ namespace Acr.IO
                 .FirstOrDefault(x => x.Name.Equals(fileName, StringComparison.Ordinal));
 
 
-        public static bool TryDelete(string filePath)
+
+        public static FileDeleteResult TryDeleteIfExists(this FileInfo file) => TryDeleteIfExists(file.FullName);
+
+        public static FileDeleteResult TryDeleteIfExists(string filePath)
         {
             if (!File.Exists(filePath))
-                return false;
+                return FileDeleteResult.DoesNotExist;
 
-            File.Delete(filePath);
-            return true;
+            try
+            {
+                File.Delete(filePath);
+                return FileDeleteResult.Success;
+            }
+            catch
+            {
+                return FileDeleteResult.Fail;
+            }
         }
 
 
-        public static void DeleteIfExists(this FileInfo file)
+        public static bool IsSuccess(this FileDeleteResult result) => result != FileDeleteResult.Fail;
+        public static void DeleteIfExists(this FileInfo file) => DeleteIfExists(file.FullName);
+        public static void DeleteIfExists(string filePath)
         {
-            if (file.Exists)
-                file.Delete();
+            if (File.Exists(filePath))
+                File.Delete(filePath);
         }
     }
 }
